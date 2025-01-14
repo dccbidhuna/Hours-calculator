@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hours Calculator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-color: #f4f4f9;
+        }
+
+        .container {
+            max-width: 500px;
+            width: 90%;
+            background: #ffffff;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            padding: 20px;
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 24px;
+            color: #333333;
+            margin-bottom: 20px;
+        }
+
+        .input-group {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        label {
+            font-size: 16px;
+            color: #555555;
+        }
+
+        input[type="time"] {
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #dddddd;
+            border-radius: 4px;
+        }
+
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            color: #ffffff;
+            background: #007bff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        button:hover {
+            background: #0056b3;
+        }
+
+        .result {
+            margin-top: 20px;
+            font-size: 18px;
+            color: #333333;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Hours Times Calculator</h1>
+        <div class="input-group">
+            <label for="start-time">Start Time:</label>
+            <input type="time" id="start-time">
+        </div>
+        <div class="input-group">
+            <label for="end-time">End Time:</label>
+            <input type="time" id="end-time">
+        </div>
+        <button id="calculate-btn">Calculate Hours</button>
+        <div class="result" id="result"></div>
+		<h2>Hours Calculator - calculate hours between times
+</h2>
+		This simple online utility tool makes it easy to calculate the difference in hours and minutes between two given times. To calculate the hours and minutes contained in a time period you need to know its beginning and end time.
+
+<br><h3>How to caluclate hours between times?
+</h3>
+<br>Follow below steps to calculate hours between times.
+
+ In the above box just input start and end time with given format.
+ Or simply click on ðŸ•“ Clock icon.
+ A time picker popup will open where you can select hours, minutes and AM/PM.
+ Finally click on Calculate Hours button.
+    </div>
+
+    <script>
+        const startTimeInput = document.getElementById('start-time');
+        const endTimeInput = document.getElementById('end-time');
+        const calculateBtn = document.getElementById('calculate-btn');
+        const resultDiv = document.getElementById('result');
+
+        function calculateHours(startTime, endTime) {
+            const [startHours, startMinutes] = startTime.split(':').map(Number);
+            const [endHours, endMinutes] = endTime.split(':').map(Number);
+
+            let start = new Date();
+            start.setHours(startHours, startMinutes);
+
+            let end = new Date();
+            end.setHours(endHours, endMinutes);
+
+            if (end < start) {
+                end.setDate(end.getDate() + 1); // Handle overnight calculations
+            }
+
+            const diff = end - start;
+            const hours = Math.floor(diff / (1000 * 60 * 60));
+            const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+
+            return `${hours} hour(s) and ${minutes} minute(s)`;
+        }
+
+        calculateBtn.addEventListener('click', () => {
+            const startTime = startTimeInput.value;
+            const endTime = endTimeInput.value;
+
+            if (startTime && endTime) {
+                const result = calculateHours(startTime, endTime);
+                resultDiv.textContent = `Duration: ${result}`;
+            } else {
+                resultDiv.textContent = 'Please enter both start and end times.';
+            }
+        });
+    </script>
+	
+
+</body>
+</html>
